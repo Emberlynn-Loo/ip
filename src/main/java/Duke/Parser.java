@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 
 public class Parser {
 
-    public static String parse(String userInput, TaskList tasks, Ui ui, Storage storage) {
+    public static String parse(String userInput, TaskList tasks, Ui ui, Storage storage) throws DukeException {
         try {
             if (userInput.equals("bye") || userInput.equals("Bye")) {
                 storage.saveTasksToFile(TaskList.getTasks(), TaskList.getTaskNum());
@@ -130,10 +130,10 @@ public class Parser {
                 String keyword = userInput.substring(userInput.indexOf(" ") + 1).trim();
                 ui.showMatchingTasks(tasks, keyword);
             }else {
-                throw new DukeException("Gurl I'm sorry, idk what that means :-(");
+                throw new DukeException("Invalid command");
             }
         } catch (DukeException e) {
-            return e.getMessage();
+            throw e;
         }
         return "I'm sorry, but I don't understand that command.";
     }
